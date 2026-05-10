@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Costa Surf Method — Eleva o teu nível</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,500;12..96,75..100,600;12..96,75..100,700;12..96,75..100,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Cursor & progress -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- ===== SURFER PARALLAX STAGE (appears between sections) ===== -->
+<svg class="surfer-stage-defs" width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A0A0A"/>
+      <stop offset="40%" stop-color="#0d2030"/>
+      <stop offset="100%" stop-color="#1B3A5C"/>
+    </linearGradient>
+    <linearGradient id="foamGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(245,241,232,0.6)"/>
+      <stop offset="100%" stop-color="rgba(245,241,232,0)"/>
+    </linearGradient>
+    <symbol id="surfer-silhouette" viewBox="0 0 100 140">
+      <!-- stylized surfer silhouette riding down-the-line -->
+      <path fill="#0A0A0A" stroke="#F5C518" stroke-width="1.4" stroke-linejoin="round" d="
+        M 30 96
+        C 28 92, 30 88, 34 86
+        L 38 78
+        C 36 72, 38 64, 44 58
+        L 48 48
+        C 46 42, 50 36, 56 36
+        C 60 36, 62 30, 60 26
+        C 58 22, 60 18, 64 18
+        C 70 18, 72 24, 68 30
+        L 66 38
+        C 70 42, 70 50, 64 56
+        L 60 66
+        C 64 70, 64 78, 60 84
+        L 58 92
+        Z
+      "/>
+      <!-- board -->
+      <ellipse cx="50" cy="100" rx="42" ry="5" fill="#F5F1E8" opacity="0.95"/>
+      <ellipse cx="50" cy="100" rx="42" ry="5" fill="none" stroke="#F5C518" stroke-width="1"/>
+      <line x1="50" y1="98" x2="50" y2="102" stroke="#0A0A0A" stroke-width="0.8"/>
+      <!-- spray -->
+      <g opacity="0.7">
+        <circle cx="14" cy="98" r="1.5" fill="#F5F1E8"/>
+        <circle cx="10" cy="94" r="1" fill="#F5F1E8"/>
+        <circle cx="18" cy="92" r="0.8" fill="#F5F1E8"/>
+        <circle cx="6" cy="100" r="0.7" fill="#F5F1E8"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== NAV ===== -->
+<nav class="nav" id="nav">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-mark"></div>
+  </a>
+  <div class="nav-links">
+    <a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a>
+    <a href="#treinador" data-pt="Treinador" data-en="Coach">Treinador</a>
+    <a href="#servicos" data-pt="Serviços" data-en="Services">Serviços</a>
+    <a href="#precos" data-pt="Preços" data-en="Pricing">Preços</a>
+    <a href="#contacto" data-pt="Contacto" data-en="Contact">Contacto</a>
+    <div class="nav-lang">
+      <button data-lang="pt" class="active">PT</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <a href="#contacto" class="nav-cta" data-pt="Aula experimental" data-en="Trial lesson">
+      Aula experimental
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== MOBILE MENU ===== -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-inner">
+    <a href="#sobre" class="mobile-link" data-pt="Sobre" data-en="About">Sobre</a>
+    <a href="#treinador" class="mobile-link" data-pt="Treinador" data-en="Coach">Treinador</a>
+    <a href="#servicos" class="mobile-link" data-pt="Serviços" data-en="Services">Serviços</a>
+    <a href="#precos" class="mobile-link" data-pt="Preços" data-en="Pricing">Preços</a>
+    <a href="#contacto" class="mobile-link" data-pt="Contacto" data-en="Contact">Contacto</a>
+    <div class="mobile-menu-lang">
+      <button data-lang="pt" class="active">PT</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <a href="#contacto" class="btn btn-gold mobile-menu-cta" data-pt="Aula experimental" data-en="Trial lesson">
+      Aula experimental
+    </a>
+  </div>
+</div>
+
+<!-- ===== SCROLL SCRUB VIDEO + HERO ===== -->
+<section class="scrub-video" id="scrub-video">
+  <div class="scrub-video-sticky">
+    <video class="scrub-video-el" id="scrub-video-el" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback>
+      <source src="scroll-surf.mp4" type="video/mp4">
+    </video>
+    <div class="scrub-video-vignette"></div>
+    <div class="hero" id="hero">
+      <div class="hero-overlay-only"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span data-pt="Escola de Surf · Costa de Portugal" data-en="Surf School · Coast of Portugal">Escola de Surf · Costa de Portugal</span>
+          <span style="margin-left:auto"></span>
+        </div>
+        <h1 class="hero-title display">
+          <span class="line"><span>COSTA</span></span>
+          <span class="line"><span>SURF</span></span>
+          <span class="line"><span>METHOD<em style="font-family:'Instrument Serif',serif;font-style:italic;font-stretch:100%;font-weight:400;color:var(--gold)">.</em></span></span>
+        </h1>
+        <div class="hero-tagline serif" data-pt="Eleva o teu nível." data-en="Raise your level.">Eleva o teu nível.</div>
+        <div class="hero-actions">
+          <a href="#contacto" class="btn btn-gold" data-pt-html="&lt;span&gt;Marcar aula experimental&lt;/span&gt;" data-en-html="&lt;span&gt;Book a trial lesson&lt;/span&gt;">
+            <span>Marcar aula experimental</span>
+            <span class="btn-arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#servicos" class="btn btn-ghost" data-pt-html="&lt;span&gt;Ver programas&lt;/span&gt;" data-en-html="&lt;span&gt;View programs&lt;/span&gt;">
+            <span>Ver programas</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-block">
+          <div class="mono" data-pt="Coordenadas" data-en="Coordinates">Coordenadas</div>
+          <div class="val" id="hero-coords">38.9°N · 9.4°W</div>
+        </div>
+        <div class="hero-meta-block">
+          <div class="mono" data-pt="Spot do dia" data-en="Today's spot">Spot do dia</div>
+          <div class="val">Praia da Areia Branca</div>
+        </div>
+        <div class="hero-meta-block">
+          <div class="mono" data-pt="Ondulação" data-en="Swell">Ondulação</div>
+          <div class="val">1.4m · 12s · NW</div>
+        </div>
+      </div>
+      <div class="hero-scroll-cue">
+        <span class="mono" data-pt="Faz scroll" data-en="Scroll">Faz scroll</span>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Iniciação <span class="star">★</span></span>
+    <span class="marquee-item alt">Intermédios</span>
+    <span class="marquee-item">Performance <span class="star">★</span></span>
+    <span class="marquee-item alt">Competição</span>
+    <span class="marquee-item">Análise de vídeo <span class="star">★</span></span>
+    <span class="marquee-item alt">Federação Portuguesa de Surf</span>
+    <!-- duplicate for loop -->
+    <span class="marquee-item">Iniciação <span class="star">★</span></span>
+    <span class="marquee-item alt">Intermédios</span>
+    <span class="marquee-item">Performance <span class="star">★</span></span>
+    <span class="marquee-item alt">Competição</span>
+    <span class="marquee-item">Análise de vídeo <span class="star">★</span></span>
+    <span class="marquee-item alt">Federação Portuguesa de Surf</span>
+  </div>
+</div>
+
+<!-- ===== SOBRE ===== -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="section-num">[01] / Sobre</div>
+    <div class="sobre-grid">
+      <div>
+        <div class="eyebrow" data-pt="Quem somos" data-en="Who we are">Quem somos</div>
+        <h2 class="sobre-title display" data-pt-html="Surf não é só desporto.&lt;br/&gt;&lt;em&gt;É método.&lt;/em&gt;" data-en-html="Surfing isn’t just sport.&lt;br/&gt;&lt;em&gt;It’s method.&lt;/em&gt;">
+          Surf não é só desporto.<br/><em>É método.</em>
+        </h2>
+      </div>
+      <div class="sobre-body">
+        <p data-pt="A Costa Surf Method é uma escola de surf focada em performance, dedicada a quem quer levar o seu surf a sério — do primeiro take-off à preparação para competição." data-en="Costa Surf Method is a performance-focused surf school for surfers who want to take it seriously — from the first take-off to competition prep.">
+          A Costa Surf Method é uma escola de surf focada em performance, dedicada a quem quer levar o seu surf a sério — do primeiro take-off à preparação para competição.
+        </p>
+        <p data-pt="Treinamos em pequenos grupos, com análise de vídeo, plano individual e o conhecimento profundo dos spots da costa portuguesa. Cada sessão é desenhada à volta de um aluno — não de um pacote." data-en="We train in small groups, with video analysis, individual plans, and deep knowledge of the Portuguese coast. Each session is built around a student — not a package.">
+          Treinamos em pequenos grupos, com análise de vídeo, plano individual e o conhecimento profundo dos spots da costa portuguesa. Cada sessão é desenhada à volta de um aluno — não de um pacote.
+        </p>
+        <p data-pt="A nossa metodologia combina três pilares: leitura do mar, técnica corporal e mentalidade competitiva. Trabalhar os três é o que distingue um surfista bom de um surfista completo." data-en="Our methodology combines three pillars: reading the ocean, body technique, and competitive mindset. Working all three is what separates a good surfer from a complete one.">
+          A nossa metodologia combina três pilares: leitura do mar, técnica corporal e mentalidade competitiva. Trabalhar os três é o que distingue um surfista bom de um surfista completo.
+        </p>
+      </div>
+    </div>
+
+    <div class="sobre-stats">
+      <div class="sobre-stat">
+        <div class="num">15<em>+</em></div>
+        <div class="mono" data-pt="Anos de experiência" data-en="Years of experience">Anos de experiência</div>
+      </div>
+      <div class="sobre-stat">
+        <div class="num">320<em>+</em></div>
+        <div class="mono" data-pt="Alunos formados" data-en="Students trained">Alunos formados</div>
+      </div>
+      <div class="sobre-stat">
+        <div class="num">4</div>
+        <div class="mono" data-pt="Programas de treino" data-en="Training programs">Programas de treino</div>
+      </div>
+      <div class="sobre-stat">
+        <div class="num">98<em>%</em></div>
+        <div class="mono" data-pt="Recomendariam a amigos" data-en="Would recommend">Recomendariam a amigos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TREINADOR ===== -->
+<section class="coach" id="treinador">
+  <div class="container">
+    <div class="section-num">[02] / Treinador</div>
+    <div class="coach-grid">
+      <div class="coach-photo-wrap">
+        <div class="coach-photo">
+          <div class="photo-inner" data-parallax="0.15" style="background-image:url('coach-ref.png')"></div>
+          <div class="frame-corners"></div>
+          <div class="photo-tag">JC · 2026</div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow" data-pt="O treinador" data-en="The coach">O treinador</div>
+        <h2 class="coach-name display">
+          JOÃO <span class="underline">COSTA</span>
+        </h2>
+        <div class="coach-role" data-pt="Treinador local e certificado." data-en="Local certified coach.">Treinador local e certificado.</div>
+        <div class="coach-bio">
+          <p data-pt="Com mais de 15 anos nas ondas, João Costa é treinador certificado pela Federação Portuguesa de Surf. Natural de Oeiras, cresceu a surfar a costa atlântica portuguesa — conhece profundamente as suas condições, marés e correntes ao longo de toda a linha e além." data-en="With over 15 years in the waves, João Costa is certified by the Portuguese Surfing Federation. From Oeiras, he grew up surfing the Portuguese Atlantic coast — with deep knowledge of its conditions, tides and currents all along the coastline and beyond.">
+            Com mais de 15 anos nas ondas, João Costa é treinador certificado pela Federação Portuguesa de Surf. Natural de Oeiras, cresceu a surfar a costa atlântica portuguesa — conhece profundamente as suas condições, marés e correntes ao longo de toda a linha e além.
+          </p>
+          <p data-pt="Especialista em análise técnica e desenvolvimento de performance, guia surfistas de todos os níveis para o seu potencial máximo. A sua abordagem combina conhecimento local profundo com metodologias avançadas." data-en="A specialist in technical analysis and performance development, he guides surfers of all levels to their maximum potential. His approach combines deep local knowledge with advanced methodologies.">
+            Especialista em análise técnica e desenvolvimento de performance, guia surfistas de todos os níveis para o seu potencial máximo. A sua abordagem combina conhecimento local profundo com metodologias avançadas.
+          </p>
+        </div>
+        <div class="coach-creds">
+          <div class="cred">
+            <svg class="cred-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M2 22 C 6 18, 10 18, 14 22 C 18 26, 22 26, 26 22 C 28 20, 30 20, 30 20" stroke-linecap="round"/>
+              <path d="M2 16 C 6 12, 10 12, 14 16 C 18 20, 22 20, 26 16 C 28 14, 30 14, 30 14" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+            <div class="cred-label" data-pt="Treinador" data-en="Coach">Treinador</div>
+            <div class="cred-value">FPS Nível 2</div>
+          </div>
+          <div class="cred">
+            <svg class="cred-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="6" y="10" width="20" height="16" rx="2"/>
+              <path d="M12 10V6h8v4" stroke-linecap="round"/>
+              <path d="M16 14v8M12 18h8" stroke-linecap="round"/>
+            </svg>
+            <div class="cred-label" data-pt="Socorrista" data-en="Lifeguard">Socorrista</div>
+            <div class="cred-value" data-pt="Certificado ISN" data-en="ISN Certified">Certificado ISN</div>
+          </div>
+          <div class="cred">
+            <svg class="cred-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="16" cy="16" r="12"/>
+              <path d="M4 16h24M16 4c4 4 6 9 6 12s-2 8-6 12c-4-4-6-9-6-12s2-8 6-12z"/>
+            </svg>
+            <div class="cred-label" data-pt="Experiência" data-en="Experience">Experiência</div>
+            <div class="cred-value" data-pt="Internacional" data-en="International">Internacional</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVIÇOS ===== -->
+<section class="servicos" id="servicos">
+  <div class="container">
+    <div class="section-num">[03] / Programas</div>
+    <div class="servicos-head">
+      <div>
+        <div class="eyebrow" data-pt="Programas" data-en="Programs">Programas</div>
+        <h2 class="servicos-title display" data-pt-html="Quatro tiers.&lt;br/&gt;Um &lt;em&gt;método.&lt;/em&gt;" data-en-html="Four tiers.&lt;br/&gt;One &lt;em&gt;method.&lt;/em&gt;">
+          Quatro tiers.<br/>Um <em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">método.</em>
+        </h2>
+      </div>
+      <p class="servicos-intro" data-pt="Programas progressivos focados em performance e evolução real. Escolhe o ponto onde estás — nós levamos-te ao próximo." data-en="Progressive programs focused on performance and real growth. Pick where you are — we'll take you to the next.">
+        Programas progressivos focados em performance e evolução real. Escolhe o ponto onde estás — nós levamos-te ao próximo.
+      </p>
+    </div>
+
+    <div class="servicos-grid">
+      <div class="programa">
+        <svg class="programa-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 38 C 12 32, 20 32, 28 38 C 36 44, 44 44, 52 38 C 56 35, 60 35, 60 35" stroke-linecap="round"/>
+          <path d="M4 28 C 12 22, 20 22, 28 28 C 36 34, 44 34, 52 28 C 56 25, 60 25, 60 25" stroke-linecap="round" opacity="0.6"/>
+          <path d="M4 18 C 12 12, 20 12, 28 18" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+        <div>
+          <div class="programa-head">
+            <span class="programa-num">01 / 04</span>
+            <span class="programa-tier">Beginner</span>
+          </div>
+          <h3 class="programa-name">INICIAÇÃO</h3>
+          <p class="programa-desc" data-pt="Fundamentos do surf, segurança no mar e primeiras ondas. Constrói uma base sólida com o equipamento certo." data-en="Surf fundamentals, ocean safety and first waves. Build a solid base with the right gear.">
+            Fundamentos do surf, segurança no mar e primeiras ondas. Constrói uma base sólida com o equipamento certo.
+          </p>
+        </div>
+        <div>
+          <div class="programa-meta">
+            <div><span class="mono" data-pt="Duração" data-en="Duration">Duração</span><span class="v">90 min</span></div>
+            <div><span class="mono" data-pt="Ratio" data-en="Ratio">Ratio</span><span class="v">1:4</span></div>
+          </div>
+          <a href="#precos" class="programa-link">
+            <span data-pt="Ver detalhes" data-en="See details">Ver detalhes</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="programa">
+        <svg class="programa-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M32 6 C 36 18, 38 30, 38 42 L 38 54 C 38 56, 36 58, 32 58 C 28 58, 26 56, 26 54 L 26 42 C 26 30, 28 18, 32 6 Z"/>
+          <line x1="32" y1="14" x2="32" y2="50"/>
+        </svg>
+        <div>
+          <div class="programa-head">
+            <span class="programa-num">02 / 04</span>
+            <span class="programa-tier">Intermediate</span>
+          </div>
+          <h3 class="programa-name">INTERMÉDIOS</h3>
+          <p class="programa-desc" data-pt="Melhoria da técnica, leitura do mar e manobras básicas. Cartwheels, bottom-turns e o teu primeiro snap consistente." data-en="Technique refinement, ocean reading and basic maneuvers. Cartwheels, bottom-turns and your first consistent snap.">
+            Melhoria da técnica, leitura do mar e manobras básicas. Cartwheels, bottom-turns e o teu primeiro snap consistente.
+          </p>
+        </div>
+        <div>
+          <div class="programa-meta">
+            <div><span class="mono" data-pt="Duração" data-en="Duration">Duração</span><span class="v">120 min</span></div>
+            <div><span class="mono" data-pt="Ratio" data-en="Ratio">Ratio</span><span class="v">1:3</span></div>
+          </div>
+          <a href="#precos" class="programa-link">
+            <span data-pt="Ver detalhes" data-en="See details">Ver detalhes</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="programa">
+        <svg class="programa-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M16 12h32v18a16 16 0 01-32 0V12z"/>
+          <path d="M16 18h-6v6a6 6 0 006 6M48 18h6v6a6 6 0 01-6 6"/>
+          <path d="M28 46v8M36 46v8M22 56h20"/>
+        </svg>
+        <div>
+          <div class="programa-head">
+            <span class="programa-num">03 / 04</span>
+            <span class="programa-tier">Performance</span>
+          </div>
+          <h3 class="programa-name">PERFORMANCE</h3>
+          <p class="programa-desc" data-pt="Treino avançado, análise de vídeo e aperfeiçoamento de manobras. Aéreos, tubos e a tua linha pessoal." data-en="Advanced training, video analysis and maneuver refinement. Airs, tubes and your personal line.">
+            Treino avançado, análise de vídeo e aperfeiçoamento de manobras. Aéreos, tubos e a tua linha pessoal.
+          </p>
+        </div>
+        <div>
+          <div class="programa-meta">
+            <div><span class="mono" data-pt="Duração" data-en="Duration">Duração</span><span class="v">150 min</span></div>
+            <div><span class="mono" data-pt="Ratio" data-en="Ratio">Ratio</span><span class="v">1:2</span></div>
+          </div>
+          <a href="#precos" class="programa-link">
+            <span data-pt="Ver detalhes" data-en="See details">Ver detalhes</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="programa">
+        <svg class="programa-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="32" cy="22" r="12"/>
+          <path d="M22 32l-4 22 14-8 14 8-4-22"/>
+          <circle cx="32" cy="22" r="5"/>
+        </svg>
+        <div>
+          <div class="programa-head">
+            <span class="programa-num">04 / 04</span>
+            <span class="programa-tier">Elite</span>
+          </div>
+          <h3 class="programa-name">COMPETIÇÃO</h3>
+          <p class="programa-desc" data-pt="Estratégia de heat, preparação física e mental para campeonatos. Construído para quem quer a placa de pódio." data-en="Heat strategy, physical and mental prep for championships. Built for those chasing the podium.">
+            Estratégia de heat, preparação física e mental para campeonatos. Construído para quem quer a placa de pódio.
+          </p>
+        </div>
+        <div>
+          <div class="programa-meta">
+            <div><span class="mono" data-pt="Duração" data-en="Duration">Duração</span><span class="v">180 min</span></div>
+            <div><span class="mono" data-pt="Ratio" data-en="Ratio">Ratio</span><span class="v">1:1</span></div>
+          </div>
+          <a href="#precos" class="programa-link">
+            <span data-pt="Ver detalhes" data-en="See details">Ver detalhes</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALERIA ===== -->
+<section class="galeria" id="galeria">
+  <div class="container" style="padding:0;max-width:none">
+    <div class="section-num">[04] / Galeria</div>
+    <div class="galeria-head">
+      <div>
+        <div class="eyebrow" data-pt="Em ação" data-en="In action">Em ação</div>
+        <h2 class="galeria-title display" data-pt-html="Águas frias.&lt;br/&gt;Linhas &lt;em&gt;quentes.&lt;/em&gt;" data-en-html="Cold water.&lt;br/&gt;Hot &lt;em&gt;lines.&lt;/em&gt;">
+          Águas frias.<br/><em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">Linhas quentes.</em>
+        </h2>
+      </div>
+      <p style="color:var(--paper-dim);font-size:18px;line-height:1.55;max-width:480px;padding-bottom:12px" data-pt="Sessões reais, alunos reais. Sem stock photography — só o que se passa entre o nosso line-up e a costa." data-en="Real sessions, real students. No stock photography — just what happens between our line-up and the coast.">
+        Sessões reais, alunos reais. Sem stock photography — só o que se passa entre o nosso line-up e a costa.
+      </p>
+    </div>
+
+    <div class="galeria-grid">
+      <div class="gal gal-1">
+        <video autoplay muted loop playsinline>
+          <source src="surfer-split.mp4" type="video/mp4">
+        </video>
+        <div class="gal-play">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="gal-tag"><span class="dot">●</span> 01 · ANÁLISE TÉCNICA</div>
+      </div>
+      <div class="gal gal-2">
+        <div class="gal-inner" data-parallax="0.1" style="background-image:url('wave-ref.png')"></div>
+        <div class="gal-tag"><span class="dot">●</span> 02 · GREEN ROOM</div>
+      </div>
+      <div class="gal gal-3">
+        <div class="gal-inner" data-parallax="0.15" style="background:linear-gradient(135deg, #1B3A5C, #0d2030);">
+          <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="stripes-1" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="40" stroke="rgba(245,241,232,0.08)" stroke-width="20"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="400" fill="url(#stripes-1)"/>
+            <text x="200" y="195" fill="rgba(245,241,232,0.5)" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" text-anchor="middle">SESSION · ERICEIRA</text>
+            <text x="200" y="215" fill="rgba(245,241,232,0.3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" text-anchor="middle">PHOTO PLACEHOLDER</text>
+          </svg>
+        </div>
+        <div class="gal-tag"><span class="dot">●</span> 03 · ERICEIRA AM</div>
+      </div>
+      <div class="gal gal-4">
+        <div class="gal-inner" data-parallax="0.1" style="background:linear-gradient(135deg, #2a2a2a, #0d0d0d);">
+          <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="stripes-2" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+                <line x1="0" y1="0" x2="0" y2="36" stroke="rgba(245,197,24,0.08)" stroke-width="18"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="400" fill="url(#stripes-2)"/>
+            <text x="200" y="195" fill="rgba(245,241,232,0.5)" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" text-anchor="middle">DUSK PADDLE OUT</text>
+            <text x="200" y="215" fill="rgba(245,241,232,0.3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" text-anchor="middle">PHOTO PLACEHOLDER</text>
+          </svg>
+        </div>
+        <div class="gal-tag"><span class="dot">●</span> 04 · DUSK SESSION</div>
+      </div>
+      <div class="gal gal-5">
+        <div class="gal-inner" data-parallax="0.12" style="background:linear-gradient(135deg, #4a3a1a, #1a1505);">
+          <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="stripes-3" x="0" y="0" width="44" height="44" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="44" y2="0" stroke="rgba(245,241,232,0.06)" stroke-width="22"/>
+              </pattern>
+            </defs>
+            <rect width="400" height="400" fill="url(#stripes-3)"/>
+            <text x="200" y="195" fill="rgba(245,241,232,0.5)" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2" text-anchor="middle">VIDEO ANALYSIS</text>
+            <text x="200" y="215" fill="rgba(245,241,232,0.3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" text-anchor="middle">PHOTO PLACEHOLDER</text>
+          </svg>
+        </div>
+        <div class="gal-tag"><span class="dot">●</span> 05 · VIDEO LAB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTEMUNHOS ===== -->
+<section class="testemunhos" id="testemunhos">
+  <div class="container">
+    <div class="section-num">[05] / Testemunhos</div>
+    <div class="testemunhos-head">
+      <div class="eyebrow" data-pt="O que dizem" data-en="What they say">O que dizem</div>
+      <h2 class="testemunhos-title display" data-pt-html="As ondas falam.&lt;br/&gt;Os &lt;em&gt;alunos&lt;/em&gt; também." data-en-html="Waves speak.&lt;br/&gt;So do &lt;em&gt;students.&lt;/em&gt;">
+        As ondas falam.<br/>Os <em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">alunos</em> também.
+      </h2>
+    </div>
+
+    <div class="testemunhos-grid">
+      <div class="testemunho">
+        <div class="test-stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+        </div>
+        <div class="test-quote" data-pt="“Em três meses passei de não conseguir levantar-me na prancha a apanhar ondas verdes. O João explica de uma forma que faz sentido — e a análise de vídeo mudou tudo.”" data-en='"In three months I went from not being able to stand up to catching green waves. João explains it in a way that makes sense — and the video analysis changed everything."'>
+          “Em três meses passei de não conseguir levantar-me na prancha a apanhar ondas verdes. O João explica de uma forma que faz sentido — e a análise de vídeo mudou tudo.”
+        </div>
+        <div class="test-author">
+          <div class="test-avatar">MS</div>
+          <div>
+            <div class="test-name">Mariana Silva</div>
+            <div class="test-meta">Iniciação · 3 meses</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testemunho">
+        <div class="test-stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+        </div>
+        <div class="test-quote" data-pt="“Já surfava há anos mas estava preso. O programa Performance fez-me redescobrir o surf — agora cada sessão tem propósito e plano.”" data-en='"I had been surfing for years but was stuck. The Performance program made me rediscover surf — every session now has purpose and a plan."'>
+          “Já surfava há anos mas estava preso. O programa Performance fez-me redescobrir o surf — agora cada sessão tem propósito e plano.”
+        </div>
+        <div class="test-author">
+          <div class="test-avatar">RA</div>
+          <div>
+            <div class="test-name">Rui Almeida</div>
+            <div class="test-meta">Performance · 8 meses</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testemunho">
+        <div class="test-stars">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5 2 7-6.5-4.5-6.5 4.5 2-7L2 9h7z"/></svg>
+        </div>
+        <div class="test-quote" data-pt="“Cheguei como júnior à preparação de competição e fiz pódio no meu primeiro circuito regional. A leitura de heat do João é cirúrgica.”" data-en='"I came in as a junior for competition prep and made the podium in my first regional circuit. João&apos;s heat reading is surgical."'>
+          “Cheguei como júnior à preparação de competição e fiz pódio no meu primeiro circuito regional. A leitura de heat do João é cirúrgica.”
+        </div>
+        <div class="test-author">
+          <div class="test-avatar">DF</div>
+          <div>
+            <div class="test-name">Diogo Ferreira</div>
+            <div class="test-meta">Competição · 1 ano</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREÇOS ===== -->
+<section class="precos" id="precos">
+  <div class="container">
+    <div class="section-num">[06] / Preços</div>
+    <div class="precos-head">
+      <div>
+        <div class="eyebrow" data-pt="Pacotes" data-en="Packages">Pacotes</div>
+        <h2 class="precos-title display" data-pt-html="Investe em &lt;em&gt;linha.&lt;/em&gt;" data-en-html="Invest in &lt;em&gt;line.&lt;/em&gt;">
+          Investe em <em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">linha.</em>
+        </h2>
+      </div>
+      <p style="color:var(--paper-dim);font-size:18px;line-height:1.55;max-width:480px;padding-bottom:12px" data-pt="Pacotes pensados para criar hábito. Equipamento incluído (prancha + fato). Aula experimental sem compromisso." data-en="Packages designed to build habit. Gear included (board + wetsuit). Trial lesson with no commitment.">
+        Pacotes pensados para criar hábito. Equipamento incluído (prancha + fato). Aula experimental sem compromisso.
+      </p>
+    </div>
+
+    <div class="precos-grid">
+      <div class="preco-card">
+        <div class="preco-tier" data-pt="Solo" data-en="Solo">Solo</div>
+        <div class="preco-name" data-pt="Aula Avulsa" data-en="Single Lesson">Aula Avulsa</div>
+        <p class="preco-blurb" data-pt="Para experimentar antes de te comprometeres. Inclui prancha e fato." data-en="Try before committing. Board and wetsuit included.">
+          Para experimentar antes de te comprometeres. Inclui prancha e fato.
+        </p>
+        <div class="preco-amount">
+          <span class="currency">€</span>
+          <span class="price">45</span>
+          <span class="per" data-pt="/aula" data-en="/lesson">/aula</span>
+        </div>
+        <ul class="preco-feats">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Aula de 90 minutos" data-en="90-minute lesson">Aula de 90 minutos</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Prancha + fato incluídos" data-en="Board + wetsuit included">Prancha + fato incluídos</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Grupo até 4 pessoas" data-en="Group up to 4">Grupo até 4 pessoas</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Análise final em vídeo" data-en="Final video analysis">Análise final em vídeo</span></li>
+        </ul>
+        <a href="#contacto" class="btn btn-ghost preco-cta">
+          <span data-pt="Reservar" data-en="Book">Reservar</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="preco-card featured">
+        <div class="preco-tier" data-pt="Pacote · Mais escolhido" data-en="Package · Most chosen">Pacote</div>
+        <div class="preco-name" data-pt="Pack 10 Aulas" data-en="10-Lesson Pack">Pack 10 Aulas</div>
+        <p class="preco-blurb" data-pt="O ritmo certo para evolução real. Plano individual e progressão monitorizada." data-en="The right rhythm for real growth. Individual plan and tracked progression.">
+          O ritmo certo para evolução real. Plano individual e progressão monitorizada.
+        </p>
+        <div class="preco-amount">
+          <span class="currency">€</span>
+          <span class="price">380</span>
+          <span class="per" data-pt="/pack" data-en="/pack">/pack</span>
+        </div>
+        <ul class="preco-feats">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="10 aulas (validade 4 meses)" data-en="10 lessons (valid 4 months)">10 aulas (validade 4 meses)</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Plano individual de progressão" data-en="Individual progression plan">Plano individual de progressão</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Análise de vídeo a cada 2 aulas" data-en="Video analysis every 2 lessons">Análise de vídeo a cada 2 aulas</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Equipamento incluído" data-en="Gear included">Equipamento incluído</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Acesso a sessões livres do clube" data-en="Access to free club sessions">Acesso a sessões livres do clube</span></li>
+        </ul>
+        <a href="#contacto" class="btn btn-gold preco-cta">
+          <span data-pt="Começar agora" data-en="Start now">Começar agora</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="preco-card">
+        <div class="preco-tier" data-pt="Premium" data-en="Premium">Premium</div>
+        <div class="preco-name" data-pt="1-on-1 Performance" data-en="1-on-1 Performance">1-on-1 Performance</div>
+        <p class="preco-blurb" data-pt="Treino exclusivo com o João. Para quem quer competir ou levar o surf ao próximo nível." data-en="Exclusive training with João. For those who want to compete or take surfing to the next level.">
+          Treino exclusivo com o João. Para quem quer competir ou levar o surf ao próximo nível.
+        </p>
+        <div class="preco-amount">
+          <span class="currency">€</span>
+          <span class="price">120</span>
+          <span class="per" data-pt="/sessão" data-en="/session">/sessão</span>
+        </div>
+        <ul class="preco-feats">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Sessão exclusiva 1:1 (2h30)" data-en="Exclusive 1:1 session (2h30)">Sessão exclusiva 1:1 (2h30)</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Análise de vídeo aprofundada" data-en="In-depth video analysis">Análise de vídeo aprofundada</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Spot escolhido conforme condições" data-en="Spot chosen by conditions">Spot escolhido conforme condições</span></li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-11"/></svg><span data-pt="Plano de competição (se aplicável)" data-en="Competition plan (if applicable)">Plano de competição (se aplicável)</span></li>
+        </ul>
+        <a href="#contacto" class="btn btn-ghost preco-cta">
+          <span data-pt="Falar com o João" data-en="Talk to João">Falar com o João</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-num">[07] / FAQ</div>
+    <div class="faq-grid">
+      <div>
+        <div class="eyebrow" data-pt="Perguntas frequentes" data-en="FAQ">Perguntas frequentes</div>
+        <h2 class="faq-title display" data-pt-html="As mais ouvidas, antes da &lt;em&gt;primeira&lt;/em&gt; onda." data-en-html="Most heard, before the &lt;em&gt;first&lt;/em&gt; wave.">
+          As mais ouvidas, antes da <em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">primeira</em> onda.
+        </h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="Preciso de saber nadar?" data-en="Do I need to know how to swim?">Preciso de saber nadar?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="Sim. É essencial saberes nadar com confiança em mar aberto. Os iniciantes começam em zonas calmas e protegidas, com fato e leash, mas a competência base na água é indispensável." data-en="Yes. You need to swim confidently in open water. Beginners start in calm, sheltered zones with wetsuit and leash, but baseline water competence is essential.">
+            Sim. É essencial saberes nadar com confiança em mar aberto. Os iniciantes começam em zonas calmas e protegidas, com fato e leash, mas a competência base na água é indispensável.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="Tenho de levar equipamento?" data-en="Do I need to bring gear?">Tenho de levar equipamento?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="Não. Prancha (adaptada ao teu nível e condições) e fato 4/3 estão incluídos em todos os pacotes. Só precisas de fato de banho, toalha e protetor solar." data-en="No. Board (matched to your level and the conditions) and 4/3 wetsuit are included in all packages. You just need swimwear, a towel and sunscreen.">
+            Não. Prancha (adaptada ao teu nível e condições) e fato 4/3 estão incluídos em todos os pacotes. Só precisas de fato de banho, toalha e protetor solar.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="Onde são as aulas?" data-en="Where are the lessons?">Onde são as aulas?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="A nossa base é a Praia da Areia Branca (Lourinhã), mas escolhemos o spot conforme as condições do dia — Ericeira, Peniche ou São Lourenço. O ponto de encontro é confirmado 24h antes." data-en="Our base is Praia da Areia Branca (Lourinhã), but we pick the spot according to daily conditions — Ericeira, Peniche or São Lourenço. The meeting point is confirmed 24h before.">
+            A nossa base é a Praia da Areia Branca (Lourinhã), mas escolhemos o spot conforme as condições do dia — Ericeira, Peniche ou São Lourenço. O ponto de encontro é confirmado 24h antes.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="E se as condições não estiverem boas?" data-en="What if conditions aren't good?">E se as condições não estiverem boas?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="A segurança vem primeiro. Se o mar não permitir, remarcamos sem custo ou — em alunos de Performance/Competição — substituímos por sessão teórica/análise de vídeo." data-en="Safety comes first. If the ocean doesn&apos;t allow it, we reschedule at no cost or — for Performance/Competition students — swap for theory/video-analysis.">
+            A segurança vem primeiro. Se o mar não permitir, remarcamos sem custo ou — em alunos de Performance/Competição — substituímos por sessão teórica/análise de vídeo.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="Aceitam crianças?" data-en="Do you accept children?">Aceitam crianças?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="Sim, a partir dos 8 anos. Há também um programa Junior (não listado acima) com aulas em grupo de fim de semana, focadas em prazer e fundamentos. Pede-nos detalhes." data-en="Yes, from age 8. There&apos;s also a Junior program (not listed above) with weekend group lessons focused on fun and fundamentals. Ask us for details.">
+            Sim, a partir dos 8 anos. Há também um programa Junior (não listado acima) com aulas em grupo de fim de semana, focadas em prazer e fundamentos. Pede-nos detalhes.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            <span data-pt="Posso oferecer uma aula?" data-en="Can I gift a lesson?">Posso oferecer uma aula?</span>
+            <span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></span>
+          </div>
+          <div class="faq-a" data-pt="Sim — temos vouchers digitais para qualquer um dos programas. Contacta-nos e enviamos no mesmo dia." data-en="Yes — we have digital vouchers for any of the programs. Contact us and we&apos;ll send it the same day.">
+            Sim — temos vouchers digitais para qualquer um dos programas. Contacta-nos e enviamos no mesmo dia.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACTO ===== -->
+<section class="contacto" id="contacto">
+  <div class="contacto-bg"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-num">[08] / Contacto</div>
+    <div class="contacto-grid">
+      <div>
+        <div class="eyebrow" data-pt="Vamos surfar" data-en="Let's surf">Vamos surfar</div>
+        <h2 class="contacto-title display" data-pt-html="Marca a tua &lt;em&gt;aula&lt;/em&gt; experimental." data-en-html="Book your &lt;em&gt;trial&lt;/em&gt; lesson.">
+          Marca a tua <em>aula</em> experimental.
+        </h2>
+        <p class="contacto-sub" data-pt="Conta-nos onde estás no teu surf e qual é o teu objetivo. Respondemos em menos de 24 horas com proposta de horário e spot." data-en="Tell us where you are in your surf and what your goal is. We reply in less than 24 hours with a time and spot proposal.">
+          Conta-nos onde estás no teu surf e qual é o teu objetivo. Respondemos em menos de 24 horas com proposta de horário e spot.
+        </p>
+
+        <div class="contacto-info">
+          <div class="contacto-info-row">
+            <span class="k" data-pt="Telefone" data-en="Phone">Telefone</span>
+            <span class="v">+351 912 345 678</span>
+          </div>
+          <div class="contacto-info-row">
+            <span class="k">Email</span>
+            <span class="v">ola@costasurfmethod.pt</span>
+          </div>
+          <div class="contacto-info-row">
+            <span class="k" data-pt="Base" data-en="Base">Base</span>
+            <span class="v">Praia da Areia Branca, Lourinhã</span>
+          </div>
+          <div class="contacto-info-row">
+            <span class="k" data-pt="Horário" data-en="Hours">Horário</span>
+            <span class="v" data-pt="Diariamente · 07h00–19h00" data-en="Daily · 7am–7pm">Diariamente · 07h00–19h00</span>
+          </div>
+        </div>
+
+        <div class="contacto-socials">
+          <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21l1.6-5A9 9 0 1112 21H3z"/><path d="M8 11.5c.5 2 2 3.5 4 4l1.5-1 2 1c-.5 1.5-2.5 2-4 1.5-2-.5-4.5-3-5-5-.5-1.5 0-3.5 1.5-4l1 2-1 1.5z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Strava"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 13l5-9 4 7h3l-3 5-4-6-3 5h-2z"/></svg></a>
+        </div>
+      </div>
+
+      <form class="contacto-form" id="contacto-form" onsubmit="event.preventDefault(); handleSubmit(this);">
+        <div class="form-row">
+          <div class="form-field">
+            <label data-pt="Nome" data-en="Name">Nome</label>
+            <input type="text" name="nome" required placeholder="João Silva" />
+          </div>
+          <div class="form-field">
+            <label data-pt="Telefone" data-en="Phone">Telefone</label>
+            <input type="tel" name="telefone" required placeholder="+351 912 000 000" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="ola@email.com" />
+        </div>
+
+        <div class="form-field">
+          <label data-pt="Programa de interesse" data-en="Program of interest">Programa de interesse</label>
+          <div class="form-tier-pills" id="tier-pills">
+            <span class="form-tier-pill active" data-tier="iniciacao">Iniciação</span>
+            <span class="form-tier-pill" data-tier="intermedios">Intermédios</span>
+            <span class="form-tier-pill" data-tier="performance">Performance</span>
+            <span class="form-tier-pill" data-tier="competicao">Competição</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label data-pt="Nível atual" data-en="Current level">Nível atual</label>
+            <select name="nivel">
+              <option data-pt="Nunca surfei" data-en="Never surfed">Nunca surfei</option>
+              <option data-pt="Já experimentei algumas vezes" data-en="Tried a few times">Já experimentei algumas vezes</option>
+              <option data-pt="Apanho ondas verdes" data-en="Catching green waves">Apanho ondas verdes</option>
+              <option data-pt="Faço manobras básicas" data-en="Basic maneuvers">Faço manobras básicas</option>
+              <option data-pt="Surfista avançado" data-en="Advanced">Surfista avançado</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label data-pt="Quando?" data-en="When?">Quando?</label>
+            <select name="quando">
+              <option data-pt="Esta semana" data-en="This week">Esta semana</option>
+              <option data-pt="Próximas 2 semanas" data-en="Next 2 weeks">Próximas 2 semanas</option>
+              <option data-pt="Este mês" data-en="This month">Este mês</option>
+              <option data-pt="Sem urgência" data-en="No rush">Sem urgência</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label data-pt="Mensagem (opcional)" data-en="Message (optional)">Mensagem (opcional)</label>
+          <textarea name="mensagem" placeholder="..." data-pt-placeholder="O que queres alcançar?" data-en-placeholder="What do you want to achieve?"></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">
+          <span data-pt="Enviar pedido" data-en="Send request">Enviar pedido</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="display" style="font-size:48px;line-height:0.9">COSTA<br/>SURF METHOD<em style="font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400;font-stretch:100%">.</em></div>
+        <p data-pt="Escola de surf focada em performance, na costa oeste de Portugal. De principiantes a competidores." data-en="Performance-focused surf school on the west coast of Portugal. From beginners to competitors.">
+          Escola de surf focada em performance, na costa oeste de Portugal. De principiantes a competidores.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 data-pt="Navegação" data-en="Navigation">Navegação</h4>
+        <ul>
+          <li><a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a></li>
+          <li><a href="#treinador" data-pt="Treinador" data-en="Coach">Treinador</a></li>
+          <li><a href="#servicos" data-pt="Programas" data-en="Programs">Programas</a></li>
+          <li><a href="#precos" data-pt="Preços" data-en="Pricing">Preços</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-pt="Programas" data-en="Programs">Programas</h4>
+        <ul>
+          <li><a href="#servicos">Iniciação</a></li>
+          <li><a href="#servicos">Intermédios</a></li>
+          <li><a href="#servicos">Performance</a></li>
+          <li><a href="#servicos">Competição</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-pt="Contacto" data-en="Contact">Contacto</h4>
+        <ul>
+          <li><a href="tel:+351912345678">+351 912 345 678</a></li>
+          <li><a href="mailto:ola@costasurfmethod.pt">ola@costasurfmethod.pt</a></li>
+          <li><a href="#">Lourinhã, PT</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Costa Surf Method</span>
+      <span data-pt="Feito na costa · Made on the coast" data-en="Made on the coast">Feito na costa · Made on the coast</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== PARALLAX VIDEO BACKGROUND ===== -->
+<div class="surfer-stage" id="surfer-stage" aria-hidden="true">
+  <video class="bg-video" id="bg-video" autoplay muted loop playsinline>
+    <source src="bg-surf.mp4" type="video/mp4">
+  </video>
+  <div class="bg-video-overlay"></div>
+  <div class="bg-video-grain"></div>
+</div>
+
+<script>
+/* ============================================
+   SCRIPTS — nav, parallax, surfer ride, FAQ, form, lang
+   ============================================ */
+
+// --- Nav scroll bg ---
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+// --- Language toggle ---
+const langButtons = document.querySelectorAll('.nav-lang button');
+let currentLang = 'pt';
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+  document.querySelectorAll('[data-pt]').forEach(el => {
+    const v = el.getAttribute('data-' + lang);
+    if (v != null) el.textContent = v;
+  });
+  document.querySelectorAll('[data-pt-html]').forEach(el => {
+    const v = el.getAttribute('data-' + lang + '-html');
+    if (v != null) el.innerHTML = v;
+  });
+  document.querySelectorAll('[data-pt-placeholder]').forEach(el => {
+    const v = el.getAttribute('data-' + lang + '-placeholder');
+    if (v != null) el.placeholder = v;
+  });
+}
+langButtons.forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+// --- Hero video parallax ---
+const heroVideo = document.querySelector('.hero-video');
+const heroSection = document.querySelector('.hero');
+
+// --- Generic [data-parallax] elements ---
+const parallaxEls = document.querySelectorAll('[data-parallax]');
+
+function updateParallax() {
+  const scrollY = window.scrollY;
+
+  // Hero video subtle vertical parallax
+  if (heroVideo && scrollY < window.innerHeight * 1.2) {
+    heroVideo.style.transform = `translate3d(0, ${scrollY * 0.35}px, 0) scale(1.05)`;
+  }
+
+  // generic
+  parallaxEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const speed = parseFloat(el.dataset.parallax) || 0.1;
+    const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+    const offset = -center * speed;
+    el.style.transform = `translate3d(0, ${offset}px, 0)`;
+  });
+}
+
+// --- Scroll scrub video ---
+(function () {
+  var vid = document.getElementById('scrub-video-el');
+  var sec = document.getElementById('scrub-video');
+  if (!vid || !sec) return;
+
+  var ready = false;
+  var lastP = -1;
+
+  function activate() {
+    if (ready) return;
+    if (!isFinite(vid.duration) || vid.duration === 0) return;
+    ready = true;
+    clearInterval(poll);
+    clearTimeout(fallback);
+    vid.pause();
+    seek();
+  }
+
+  var poll = setInterval(function () {
+    if (vid.readyState >= 1 && isFinite(vid.duration)) activate();
+  }, 100);
+
+  ['loadedmetadata','loadeddata','canplay','canplaythrough'].forEach(function(e) {
+    vid.addEventListener(e, activate);
+  });
+
+  var fallback = setTimeout(function () {
+    if (!ready) { vid.play().catch(function(){}); }
+  }, 4000);
+
+  function seek() {
+    if (!sec) return;
+    var rect = sec.getBoundingClientRect();
+    var scrollable = sec.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    var p = Math.max(0, Math.min(1, -rect.top / scrollable));
+    if (Math.abs(p - lastP) < 0.002) return;
+    lastP = p;
+    if (ready) vid.currentTime = p * vid.duration;
+  }
+
+  window._scrubSeek = seek;
+
+  // iOS unlock: play+pause on first touch to allow currentTime seeking
+  function iosUnlock() {
+    vid.play().then(() => { vid.pause(); activate(); }).catch(function(){});
+    document.removeEventListener('touchstart', iosUnlock);
+  }
+  document.addEventListener('touchstart', iosUnlock, { once: true, passive: true });
+
+  // touchmove fallback for iOS momentum scroll
+  window.addEventListener('touchmove', function() {
+    if (window._scrubSeek) window._scrubSeek();
+  }, { passive: true });
+})();
+
+function updateScrubVideo() {
+  if (window._scrubSeek) window._scrubSeek();
+}
+
+// --- Background video parallax (slower than scroll) ---
+const bgVideo = document.getElementById('bg-video');
+
+function updateSurfer() {
+  const scrollY = window.scrollY;
+  if (bgVideo) {
+    // Subtle parallax: video drifts upward slowly relative to scroll
+    const offset = -scrollY * 0.2;
+    bgVideo.style.transform = `translate3d(0, ${offset}px, 0) scale(1.05)`;
+  }
+}
+
+let ticking = false;
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      updateParallax();
+      updateSurfer();
+      updateScrubVideo();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
+
+// --- IntersectionObserver fade-up (staggered) ---
+const fadeTargets = document.querySelectorAll('.programa, .testemunho, .preco-card, .gal, .sobre-stat, .cred, .faq-item');
+fadeTargets.forEach(el => {
+  const siblings = el.parentElement
+    ? [...el.parentElement.children].filter(c => c.classList.contains(el.classList[0]))
+    : [];
+  const delay = siblings.indexOf(el) * 90;
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(28px)';
+  el.style.transition = `opacity 0.7s ease ${delay}ms, transform 0.7s cubic-bezier(.2,.8,.2,1) ${delay}ms`;
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+fadeTargets.forEach(el => io.observe(el));
+
+// --- FAQ toggle ---
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => item.classList.toggle('open'));
+});
+
+// --- Tier pills ---
+const tierPills = document.querySelectorAll('.form-tier-pill');
+tierPills.forEach(p => p.addEventListener('click', () => {
+  tierPills.forEach(o => o.classList.remove('active'));
+  p.classList.add('active');
+}));
+
+// --- Form submit ---
+function handleSubmit(form) {
+  const grid = form.parentElement;
+  form.innerHTML = `
+    <div class="form-success">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="24" cy="24" r="22"/>
+        <path d="M14 24l7 7 13-15" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;margin-bottom:8px">Pedido enviado.</div>
+      <div style="color:var(--paper-dim);font-size:15px">Respondemos em menos de 24h. <br/>Entretanto, vai à praia.</div>
+    </div>
+  `;
+}
+window.handleSubmit = handleSubmit;
+
+// --- Live coordinates ---
+(function () {
+  var el = document.getElementById('hero-coords');
+  if (!el || !navigator.geolocation) return;
+  function fmt(val, posLabel, negLabel) {
+    return Math.abs(val).toFixed(1) + '°' + (val >= 0 ? posLabel : negLabel);
+  }
+  function update() {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      el.textContent = fmt(pos.coords.latitude, 'N', 'S') + ' · ' + fmt(pos.coords.longitude, 'E', 'W');
+    });
+  }
+  update();
+  setInterval(update, 300000); // refresh every 5 min
+})();
+
+// --- Hamburger menu ---
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger && hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+document.querySelectorAll('.mobile-link, .mobile-menu-cta').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+document.querySelectorAll('.mobile-menu-lang button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.mobile-menu-lang button').forEach(o => o.classList.remove('active'));
+    b.classList.add('active');
+    applyLang(b.dataset.lang);
+  });
+});
+
+// --- Scroll progress bar ---
+(function () {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  function update() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+// --- Custom cursor ---
+(function () {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if (!dot || !ring) return;
+  let mx = -200, my = -200, rx = -200, ry = -200;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    dot.classList.add('active'); ring.classList.add('active');
+  });
+  document.addEventListener('mouseleave', () => { dot.classList.remove('active'); ring.classList.remove('active'); });
+  document.addEventListener('mousedown', () => ring.classList.add('click'));
+  document.addEventListener('mouseup', () => ring.classList.remove('click'));
+  const hoverSel = 'a, button, .programa, .testemunho, .preco-card, .faq-item, input, select, textarea, .form-tier-pill';
+  document.querySelectorAll(hoverSel).forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+  });
+  (function tick() {
+    rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+})();
+
+// --- Magnetic CTA buttons ---
+(function () {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll('.btn-gold, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * 0.3;
+      const y = (e.clientY - r.top - r.height / 2) * 0.3;
+      btn.style.transition = 'transform 0.1s ease, background 0.2s ease';
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transition = 'transform 0.6s cubic-bezier(.23,1,.32,1), background 0.2s ease';
+      btn.style.transform = '';
+    });
+  });
+})();
+
+// --- Animated counters ---
+(function () {
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  const statEls = document.querySelectorAll('.sobre-stat .num');
+  const io2 = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const em = el.querySelector('em');
+      const suffix = em ? em.outerHTML : '';
+      const target = parseInt(el.textContent) || 0;
+      const t0 = performance.now();
+      const delay = [...statEls].indexOf(el) * 120;
+      setTimeout(() => {
+        (function frame(now) {
+          const p = Math.min((now - t0 - delay) / 1400, 1);
+          if (p > 0) el.innerHTML = Math.round(easeOut(p) * target) + suffix;
+          if (p < 1) requestAnimationFrame(frame);
+        })(performance.now());
+      }, delay);
+      io2.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  statEls.forEach(el => io2.observe(el));
+})();
+
+// --- 3D tilt on coach photo ---
+(function () {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  const wrap = document.querySelector('.coach-photo');
+  if (!wrap) return;
+  wrap.addEventListener('mousemove', e => {
+    const r = wrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    wrap.style.transition = 'transform 0.1s ease';
+    wrap.style.transform = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`;
+  });
+  wrap.addEventListener('mouseleave', () => {
+    wrap.style.transition = 'transform 0.7s cubic-bezier(.23,1,.32,1)';
+    wrap.style.transform = '';
+  });
+})();
+
+</script>
+
+</body>
+</html>
